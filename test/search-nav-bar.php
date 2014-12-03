@@ -6,7 +6,7 @@
 		</div>
 		<form class="navbar-form navbar-left" action="index.php" method="get">
 			<div class="form-group">
-				<?php echo '<input type="text" class="form-control"  name="q" value="' . $_GET['q'] . '">';?>
+				<input type="text" class="form-control"  name="q" value="<?php echo  $_GET['q']; ?>">
 				<button type="submit" class="btn btn-default" >Go!</button>
 			</div>
 		</form>

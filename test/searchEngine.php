@@ -1,16 +1,4 @@
-<?php
-// Create BDD
-try
-{
-	$bdd = new PDO('mysql:host=localhost;dbname=hearthstone','root','', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-}
-catch(Exception $e)
-{
-	die('Erreur : '.$e->getMessage());
-}
-
-if(!isset($_GET['q']) or $_GET['q'] == ''){
-	?>
+<?php if(!isset($_GET['q']) || $_GET['q'] == '') : ?>
 	<div class="input-group input-group-lg" id="search-field">
 		<div id="search-pic">
 			<img src="Images/logo.png" alt="...">
@@ -24,17 +12,10 @@ if(!isset($_GET['q']) or $_GET['q'] == ''){
 			</form>
 		</div>
 	</div>
-	<?php
-	if(isset($_GET['q']) && $_GET['q'] == '')
-	{
-	?>
+	<?php if(isset($_GET['q']) && $_GET['q'] == '') : ?>
 		<div class="alert alert-warning" role="alert">You should put <em> something </em> inside the search bar...</div>
-	<?php	
-	}
-	?>
-<?php
-} else {
+	<?php endif; ?>
+<?php else :
 	include('search-nav-bar.php');
 	include('search-results.php');
-}
-?>
+endif; ?>

@@ -1,44 +1,18 @@
 <?php
+
 // Function createListElement
-function createListElement($card,$active)
+function createListElement($card, $active)
 {
-	echo '<tr' . ($active ? ' class="info"' : '') . '>';
-	echo '<td><form action="index.php" method="get">';
-	echo '<input type="hidden" name="q" value="' . $_GET['q'] . '">';
-	echo '<button type="submit" name="id" value="' . $card['id'] . '" class="flatButton">' . $card['name'] .'</button>';
-	echo '</form></td>';
-	echo '<td>' . $card['type'] . '</td>' . "\n";
-	echo '<td>' . $card['text'] . '</td>' . "\n";
-	echo '<td>' . (($card['playerClass'] != 'Dream' and $card['playerClass'] != '') ? '<nobr><img src="Icons/' . $card['playerClass'] . '.jpg"/> ' : '<nobr> '). $card['playerClass'] . '</nobr></td>' . "\n";
-	echo '<td>' .  (($card['rarity'] != 'Free' and $card['rarity'] != '')? '<nobr><img src="Icons/' . $card['rarity'] . '.png"/> ' : '<nobr> ') . $card['rarity'] . '</nobr></td>' . "\n";
-	echo '<td>' .  ($card['health'] != '' ? '<nobr><img src="Icons/vie.png"/> ' : '<nobr> ') . $card['health'] . '</nobr></td>' . "\n";
-	echo '<td>' .  ($card['cost'] != '' ? '<nobr><img src="Icons/mana.png"/> ' : '<nobr> ') . $card['cost'] . '</nobr></td>' . "\n";
-	echo '<td>' .  ($card['attack'] != '' ? '<nobr><img src="Icons/attaque.png"/> ' : '<nobr> ') . $card['attack'] . '</nobr></td>' . "\n";
-	echo '<td>' . $card['race'] . '</td>' . "\n";
-	echo '</tr>';
+	include('cardTemplate.php');
 }
 
-
-// Create BDD
-try
-{
-	$bdd = new PDO('mysql:host=localhost;dbname=hearthstone','root','', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-}
-catch(Exception $e)
-{
-	die('Erreur : '.$e->getMessage());
-}
-?>
-
-
-<?php 
 if(isset($_GET['id'])){
 	include('cardDisplayer.php');
 }
 ?>
 
 <!-- List Display -->
-<?php 
+<?php
 // Create query for card
 
 $card_query = $bdd->prepare('SELECT * FROM allset WHERE id = :key');
@@ -73,7 +47,7 @@ $querys = array(
 			<?php
 			$key_words = explode(' ',$_GET['q']);
 			$results = array();
-			
+
 			// Create array for each card id found in with the first key word,
 			//  Each cell will later on contains each matching key word for the id
 			foreach ($querys as $query) {
@@ -82,7 +56,7 @@ $querys = array(
 					$results[$card['id']] = array() ;
 				}
 			}
-			
+
 			foreach ($key_words as $key) {
 				foreach ($querys as $query) {
 					$query->execute(array('key' => $key));
@@ -96,7 +70,7 @@ $querys = array(
 
 			foreach(array_keys($results) as $card_id)
 			{
-				if(sizeof($results[$card_id]) == sizeof($key_words)){	
+				if(sizeof($results[$card_id]) == sizeof($key_words)){
 					$card_query->execute(array('key' => $card_id));
 					while($card = $card_query->fetch()){
 						if(isset($_GET['id']) and $card['id'] == $_GET['id']){

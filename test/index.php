@@ -1,3 +1,6 @@
+<?php
+	include_once('singleton.php');
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,7 +13,7 @@
 </head>
 <body>
 	<?php
-	include('searchEngine.php');
+		include('searchEngine.php');
 	?>
 </body>
 </html>
