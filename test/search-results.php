@@ -73,7 +73,9 @@ $querys = array(
 			<?php
 			$key_words = explode(' ',$_GET['q']);
 			$results = array();
-			// Create array
+			
+			// Create array for each card id found in with the first key word,
+			//  Each cell will later on contains each matching key word for the id
 			foreach ($querys as $query) {
 				$query->execute(array('key' => $key_words[0]));
 				while($card = $query->fetch()){
@@ -86,14 +88,10 @@ $querys = array(
 					$query->execute(array('key' => $key));
 					while($card = $query->fetch()){
 						if(array_key_exists($card['id'], $results)){
-							$results[$card['id']] = array_merge($results[$card['id']],array($key));
+							$results[$card['id']] = array_unique(array_merge($results[$card['id']],array($key)));
 						}
 					}
 				}
-			}
-			// Clean results
-			foreach (array_keys($results) as $card_id) {
-				$results[$card_id] = array_unique($results[$card_id]);
 			}
 
 			foreach(array_keys($results) as $card_id)
