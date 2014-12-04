@@ -15,7 +15,7 @@
           <tr><td class="myLabel"> Text </td><td><?php echo $card['text']; ?></td></tr>
         <?php endif; ?>
         <?php if($card['playerClass'] != NULL) : ?>
-          <tr><td class="myLabel"> Player Class </td><td>' . ($card['playerClass'] != 'Dream' ? '<img src="Icons/' . $card['playerClass']; ?>.jpg"/> ' : ' '). $card['playerClass']; ?></td></tr>
+          <tr><td class="myLabel"> Player Class </td><td> <?php echo ($card['playerClass'] != 'Dream' ? '<img src="Icons/' . $card['playerClass'] . '.jpg"/> ' : ' '). $card['playerClass']; ?></td></tr>
         <?php endif; ?>
         <?php if($card['mechanics'] != NULL) : ?>
           <tr><td class="myLabel"> Mechanics </td><td><?php echo $card['mechanics']; ?></td></tr>
